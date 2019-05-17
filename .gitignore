@@ -1,0 +1,8 @@
+.*
+*.Rproj
+*.pdf
+Resources
+Theory
+*.Data
+Archived
+!.gitignore
