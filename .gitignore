@@ -6,3 +6,4 @@ Theory
 *.Data
 Archived
 !.gitignore
+.Rproj.user

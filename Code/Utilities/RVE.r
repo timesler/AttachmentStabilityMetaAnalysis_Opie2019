@@ -14,16 +14,21 @@ MetaAnalysis.RVE <- function(
   notes <- c()
   
   # Remove empty samples
-  data$n <- data[[n]]
+  data$n <- as.integer(data[[n]])
   data <- subset(data, data$n > 0)
   
   # Define grouping, effect-size and published columns
   data$grp1 <- data[[grping1]]
   data$grp2 <- data[[grping2]]
-  data$Meas <- data[[measureCol]]
+  data$Meas <- as.double(data[[measureCol]])
   MeasInit <- data$Meas
   data$published <- as.logical(data[[published]])
   grping1_lvls <- levels(data$grp1)
+  
+  
+  if (!is.null(measureSub)) {
+    data[[measureSub]] <- as.double(data[[measureSub]])
+  }
   
   nName <- n
   
@@ -78,7 +83,8 @@ MetaAnalysis.RVE <- function(
   eggersRegTest <- list()
   dataList <- list()
   for (grping in grping1_lvls) {
-    if (sum(data$grp1 == grping) > 1 && grping != "Other")
+    # if (sum(data$grp1 == grping) > 1 && grping != "Other")
+    if (sum(data$grp1 == grping) > 4)
     {
       data.grp = data[data$grp1 == grping,]
       
@@ -269,7 +275,8 @@ forest.RVE <- function(
   fileName,
   extraCol = NULL,
   extraColName = NULL,
-  fullData = NULL
+  fullData = NULL,
+  sort_by_meas = TRUE
 ) 
 {
   # Unpack
@@ -278,7 +285,9 @@ forest.RVE <- function(
   zTrans <-RVEModel$zTrans
   data$study <- as.character(data[[studyNames]])
   data$sample <- data[[sampleNames]]
-  grping1_lvls <- levels(data$grp1)
+  
+  grping1_tbl <- table(data$grp1)
+  grping1_lvls <- names(grping1_tbl)[grping1_tbl > 0]
   
   measScale <- 1
   if (RVEModel$measureType == "p")
@@ -307,7 +316,8 @@ forest.RVE <- function(
   for (grping in grping1_lvls)
   {
     indx <- data$grp1 == grping & !is.na(data$n)
-    if (sum(indx) > 1 && grping != "Other") {
+    # if (sum(indx) > 1 && grping != "Other") {
+    if (sum(indx) > 4) {
       data$weight[indx] <- REModels[[grping]]$data.full$r.weights / 
         sum(REModels[[grping]]$data.full$r.weights) * 100
       
@@ -327,7 +337,18 @@ forest.RVE <- function(
   }
   
   # Sort data by level 1 and level 2 grouping and add an id
-  data <- data %>% arrange(as.integer(grp1), study)
+  if (sort_by_meas)
+  {
+    data <- data %>% 
+      group_by(as.integer(grp1), study) %>% 
+      mutate(sort_meas = mean(Meas)) %>% 
+      ungroup()
+    data <- data %>% arrange(as.integer(grp1), sort_meas)
+  }
+  else
+  {
+    data <- data %>% arrange(as.integer(grp1), study)
+  }
   data$ID <- 1:nrow(data)
   
   # Define headings for studies with multiple endpoints

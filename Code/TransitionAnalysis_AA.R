@@ -8,7 +8,7 @@ k_RVEModel <- RVEModel
 #### Read in data from EXCEL file ####
 
 sheet <- "Processed - Stability"
-filename <- "Data/20180121_Data_Extraction_Table.xlsx"
+filename <- "Data/20200213_Data_Extraction_Table.xlsx"
 classes <- c("A", "NotA")
 identifier <- ".4"
 fullRobu <- T

@@ -5,7 +5,7 @@ source("Code/Utilities/init.RVE.r")
 #### Read in data from EXCEL file ####
 
 sheet <- "2-way k"
-filename <- "Data/20180121_Data_Extraction_Table.xlsx"
+filename <- "Data/20200213_Data_Extraction_Table.xlsx"
 zTrans <- T
 dataNames <- c(
   "StudyID",
@@ -46,7 +46,7 @@ RVEModel <- MetaAnalysis.RVE(
 
 Summary.RVE(
   RVEModel,
-  fileName = "Output/StatisticalResults_2x2_k_20190330.txt"
+  fileName = "Output/StatisticalResults_2x2_k_20200213.txt"
 )
 
 forest.RVE(
@@ -54,6 +54,6 @@ forest.RVE(
   studyNames = "Authors",
   sampleNames = "Subsample",
   effSizeName = "Cohens's k",
-  fileName = "Figures/2x2_Forest_k_20190330.tiff"
+  fileName = "Figures/2x2_Forest_k_20200213.tiff"
 )
 

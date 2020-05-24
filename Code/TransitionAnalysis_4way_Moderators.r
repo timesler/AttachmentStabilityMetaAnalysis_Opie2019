@@ -12,7 +12,7 @@ classes <- c("B", "A", "C", "D")
 identifier <- ".4"
 fullRobu <- T
 
-dataRaw <- read_excel("Data/20180121_Data_Extraction_Table.xlsx", sheet = sheet, col_names=TRUE, na = "NA")
+dataRaw <- read_excel("Data/20200213_Data_Extraction_Table.xlsx", sheet = sheet, col_names=TRUE, na = "NA")
 dataRaw <- dataRaw[!is.na(dataRaw$Authors),]
 names(dataRaw) <- make.names(names(dataRaw))
 dataRaw$Study.ID <- match(dataRaw$Study.ID,unique(dataRaw$Study.ID))
@@ -80,7 +80,7 @@ data$Interval[!(data$Interval %in% intervals[1:3])] <- "Other"
 data$Interval <- factor(data$Interval, levels <- intervals)
 
 #### Build transitions tables ####
-file <- "Output/CONT/4way_Results_Moderators_20190330.csv"
+file <- "Output/CONT/4way_Results_Moderators_20200213.csv"
 write.table(
   "4-way Moderator Results", 
   file = file, 

@@ -5,7 +5,7 @@ source("Code/Utilities/init.RVE.r")
 #### Read in data from EXCEL file ####
 
 sheet <- "3-way"
-filename <- "Data/20180121_Data_Extraction_Table.xlsx"
+filename <- "Data/20200213_Data_Extraction_Table.xlsx"
 zTrans <- T
 dataNames <- c(
   "StudyID",
@@ -46,7 +46,7 @@ RVEModel <- MetaAnalysis.RVE(
 
 Summary.RVE(
   RVEModel,
-  fileName = "Output/StatisticalResults_3way_k_20190330.txt"
+  fileName = "Output/StatisticalResults_3way_k_20200213.txt"
 )
 
 forest.RVE(
@@ -54,12 +54,12 @@ forest.RVE(
   studyNames = "Authors",
   sampleNames = "Subsample",
   effSizeName = "Cohen's k",
-  fileName = "Figures/3way_k_Forest_20190330.tiff"
+  fileName = "Figures/3way_k_Forest_20200213.tiff"
 ) 
 
 funnel.RVE(
   RVEModel,
-  fileName = "Figures/3way_k_Funnel_20190330.tiff",
+  fileName = "Figures/3way_k_Funnel_20200213.tiff",
   trimnfill = T,
   plotReg = T
 )
@@ -70,5 +70,5 @@ if (zTrans) {
   transf <- function(x) {x}
 }
 correlations <- lapply(RVEModel$REModels, function(x) transf(x$reg_table$b.r))
-save(correlations, file = "Output/STAB/3-way/Correlations_20190330.RData")
+save(correlations, file = "Output/STAB/3-way/Correlations_20200213.RData")
 

@@ -12,7 +12,7 @@ user_beta_DD <- user_beta
 #### Read in data from EXCEL file ####
 
 sheet <- "4-way"
-filename <- "Data/20180121_Data_Extraction_Table.xlsx"
+filename <- "Data/20200213_Data_Extraction_Table.xlsx"
 zTrans <- F
 dataNames <- c(
   "StudyID",
@@ -62,7 +62,8 @@ forest.RVE(
   studyNames = "Authors",
   sampleNames = "Subsample",
   effSizeName = "Percentage Residual",
-  fileName = "Figures/AA_p_Forest_20190330.tiff"
+  fileName = "Figures/AA_p_Forest_20200213.tiff",
+  sort_by_meas = FALSE
 )
 
 RVEModel <- MetaAnalysis.RVE(
@@ -87,7 +88,8 @@ forest.RVE(
   studyNames = "Authors",
   sampleNames = "Subsample",
   effSizeName = "Percentage Residual",
-  fileName = "Figures/BB_p_Forest_20190330.tiff"
+  fileName = "Figures/BB_p_Forest_20200213.tiff",
+  sort_by_meas = FALSE
 )
 
 RVEModel <- MetaAnalysis.RVE(
@@ -112,7 +114,8 @@ forest.RVE(
   studyNames = "Authors",
   sampleNames = "Subsample",
   effSizeName = "Percentage Residual",
-  fileName = "Figures/CC_p_Forest_20190330.tiff"
+  fileName = "Figures/CC_p_Forest_20200213.tiff",
+  sort_by_meas = FALSE
 )
 
 RVEModel <- MetaAnalysis.RVE(
@@ -137,7 +140,8 @@ forest.RVE(
   studyNames = "Authors",
   sampleNames = "Subsample",
   effSizeName = "Percentage Residual",
-  fileName = "Figures/DD_p_Forest_20190330.tiff"
+  fileName = "Figures/DD_p_Forest_20200213.tiff",
+  sort_by_meas = FALSE
 )
 
 RVEModel <- MetaAnalysis.RVE(
@@ -162,7 +166,8 @@ forest.RVE(
   studyNames = "Authors",
   sampleNames = "Subsample",
   effSizeName = "Percentage Residual",
-  fileName = "Figures/ISIS_p_Forest_20190330.tiff"
+  fileName = "Figures/ISIS_p_Forest_20200213.tiff",
+  sort_by_meas = FALSE
 )
 
 RVEModel <- MetaAnalysis.RVE(
@@ -187,7 +192,8 @@ forest.RVE(
   studyNames = "Authors",
   sampleNames = "Subsample",
   effSizeName = "Percentage Residual",
-  fileName = "Figures/OO_p_Forest_20190330.tiff"
+  fileName = "Figures/OO_p_Forest_20200213.tiff",
+  sort_by_meas = FALSE
 )
 
 RVEModel <- MetaAnalysis.RVE(
@@ -204,7 +210,7 @@ RVEModel <- MetaAnalysis.RVE(
 
 funnel.RVE(
   RVEModel,
-  fileName = "Figures/Four_way_k_Funnel_20190330.tiff",
+  fileName = "Figures/Four_way_k_Funnel_20200213.tiff",
   trimnfill = F,
   plotReg = T,
   effSizeName = expression(paste("Cohen's", ~italic(kappa)))

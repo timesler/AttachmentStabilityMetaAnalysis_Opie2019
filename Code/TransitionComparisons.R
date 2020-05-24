@@ -5,7 +5,7 @@ source("Code/Utilities/init.RVE.r")
 #### Read in data from EXCEL file ####
 
 sheet <- "4-way"
-filename <- "Data/20180121_Data_Extraction_Table.xlsx"
+filename <- "Data/20200213_Data_Extraction_Table.xlsx"
 dataNames <- c(
   "StudyID",
   "Authors",

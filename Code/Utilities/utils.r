@@ -21,13 +21,16 @@ getData <- function(filename, sheet, dataNames, numericCols, priorInc = T, clear
   # Get the unique intervals we have in this data (these are hard-coded as we want to add
   # an empty section in the final plot for those intervals which aren't in the data)
   intervals <- c(
+    "Infancy - Infancy",
     "Infancy - Toddlerhood",
     "Infancy - Preschool/School Entry",
-    "Toddlerhood - Preschool/School Entry"
+    "Toddlerhood - Toddlerhood",
+    "Toddlerhood - Preschool/School Entry",
+    "Preschool/School Entry - Preschool/School Entry"
   )
   data$Interval <- gsub("Preschool", "Preschool/School Entry", data$Interval)
-  data$Interval[!(data$Interval %in% intervals)] <- "Other"
-  intervals <- c(intervals, "Other")
+  # data$Interval[!(data$Interval %in% intervals)] <- "Other"
+  # intervals <- c(intervals, "Other")
   data$StudyID <- match(data$StudyID,unique(data$StudyID)) # convert to consequtive IDs
   data$Interval <- factor(data$Interval, levels <- intervals)
   
@@ -70,14 +73,16 @@ getTransitionsData <- function(filename, sheet, identifier, classes)
   # Get the unique intervals we have in this data (these are hard-coded as we want to add
   # an empty section in the final plot for those intervals which aren't in the data)
   intervals <- c(
+    "Infancy - Infancy",
     "Infancy - Toddlerhood",
     "Infancy - Preschool/School Entry",
+    "Toddlerhood - Toddlerhood",
     "Toddlerhood - Preschool/School Entry",
-    "Other",
+    "Preschool/School Entry - Preschool/School Entry",
     "overall"
   )
   data$Interval <- gsub("Preschool", "Preschool/School Entry", data$Interval)
-  data$Interval[!(data$Interval %in% intervals[1:3])] <- "Other"
+  # data$Interval[!(data$Interval %in% intervals[1:3])] <- "Other"
   data$Interval <- factor(data$Interval, levels <- intervals)
   
   return(data)
@@ -87,8 +92,8 @@ getTransitionsData <- function(filename, sheet, identifier, classes)
 buildTransitionsTables <- function(data, classes, fullRobu)
 {
   classCollapse <- paste0(classes, collapse="")
-  file <- paste0("Output/CONT/", classCollapse, "_Results_20190330.csv")
-  fileFig <- paste0("Output/CONT/", classCollapse, "_Results_figure_20190330.csv")
+  file <- paste0("Output/CONT/", classCollapse, "_Results_20200213.csv")
+  fileFig <- paste0("Output/CONT/", classCollapse, "_Results_figure_20200213.csv")
   write.table(
     paste0(classCollapse, " Transitions Tables"), 
     file = file, 
@@ -112,10 +117,11 @@ buildTransitionsTables <- function(data, classes, fullRobu)
   metricsFig <- c(".Count", ".Percentage", ".CI_L", ".CI_U", ".ExpectedPercent", ".AdjStandResidual")
   
   intervals <- c(
+    "Infancy - Infancy",
     "Infancy - Toddlerhood",
     "Infancy - Preschool/School Entry",
     "Toddlerhood - Preschool/School Entry",
-    "Other",
+    "Preschool/School Entry - Preschool/School Entry",
     "overall"
   )
   
@@ -140,6 +146,7 @@ buildTransitionsTables <- function(data, classes, fullRobu)
         data.int <- data[data$Interval == interval,]
       else
         data.int <- data
+      
       data.weights <- k_RVEModel$dataList[[interval]] %>%
         select(mdlWeights, StudyID, Sample, Subsample, Interval, n) %>%
         mutate(mdlWeights = sqrt(mdlWeights) / sum(sqrt(mdlWeights)) * length(unique(StudyID)))
@@ -378,9 +385,9 @@ compareClasses_IPD <- function(data, classes)
   studynum <- c()
   for (class in classes) 
   {
-    prop <- c(prop, data[[paste(class, "Proportion")]])
-    expProp <- c(expProp, data[[paste(class, "expected proportion")]])
-    ns <- c(ns, data[[paste(class, "n")]])
+    prop <- c(prop, as.double(data[[paste(class, "Proportion")]]))
+    expProp <- c(expProp, as.double(data[[paste(class, "expected proportion")]]))
+    ns <- c(ns, as.integer(data[[paste(class, "n")]]))
     pattern <- c(pattern, rep(class, nrow(data)))
     studynum <- c(studynum, data$StudyID)
   }

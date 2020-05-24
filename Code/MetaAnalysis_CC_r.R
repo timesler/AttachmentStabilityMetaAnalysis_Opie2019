@@ -5,7 +5,7 @@ source("Code/Utilities/init.RVE.r")
 #### Read in data from EXCEL file ####
 
 sheet <- "CC r"
-filename <- "Data/20180121_Data_Extraction_Table.xlsx"
+filename <- "Data/20200213_Data_Extraction_Table.xlsx"
 zTrans <- T
 dataNames <- c(
   "StudyID",
@@ -47,7 +47,7 @@ RVEModel <- MetaAnalysis.RVE(
 
 Summary.RVE(
   RVEModel,
-  fileName = "Output/StatisticalResults_CC_20190330.txt"
+  fileName = "Output/StatisticalResults_CC_20200213.txt"
 )
 
 # Get k for plotting along side r values
@@ -59,14 +59,14 @@ forest.RVE(
   studyNames = "Authors",
   sampleNames = "Subsample",
   effSizeName = "Pearson's r",
-  fileName = "Figures/CC_Forest_20190330.tiff",
+  fileName = "Figures/CC_Forest_20200213.tiff",
   extraCol = "k",
   extraColName = "k"
 ) 
 
 funnel.RVE(
   RVEModel,
-  fileName = "Figures/CC_Funnel_20190330.tiff",
+  fileName = "Figures/CC_Funnel_20200213.tiff",
   trimnfill = T,
   plotReg = T,
   effSizeName = "Pearson's r"
